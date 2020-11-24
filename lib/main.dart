@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'LoginScreen.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -51,6 +53,9 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  bool activeFlatButtonColor = true;
+  bool activeRaisedButtonColor = true;
+  bool virtualFlatButtonColor = true;
 
   void _incrementCounter() {
     setState(() {
@@ -63,12 +68,25 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void testFunction() {
-    // click working
+  void changeFlatButtonColor() {
+    setState(() {
+      activeFlatButtonColor = !activeFlatButtonColor;
+    });
   }
 
-  void tryFunction() {
-    //click
+  void changeRaisedButtonColor() {
+    setState(() {
+      activeRaisedButtonColor = !activeRaisedButtonColor;
+    });
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginScreen()));
+    // Navigator.push(
+    //     context, MaterialPageRoute(builder: (context) => LoginScreen()));
+  }
+
+  void switchFlatButtonColor() {
+    setState(() {
+      virtualFlatButtonColor = !virtualFlatButtonColor;
+    });
   }
 
   @override
@@ -120,16 +138,36 @@ class _MyHomePageState extends State<MyHomePage> {
                   .headline4,
             ),
             FlatButton(
-                onPressed: testFunction, child: Text('Hello Flat Button')),
+              onPressed: changeFlatButtonColor,
+              child: Text('Hello Flat Button'),
+              color: activeFlatButtonColor == true
+                  ? Colors.cyan
+                  : Colors.deepPurpleAccent,
+            ),
             RaisedButton(
-                onPressed: tryFunction, child: Text('Hello Raised button')),
+              onPressed: changeRaisedButtonColor,
+              child: Text('Hello Raised button'),
+              color: activeRaisedButtonColor ? Colors.red : Colors.amber,
+            ),
+            Text(
+              "SAWERA",
+              style: TextStyle(
+                color: virtualFlatButtonColor
+                    ? Colors.deepPurple
+                    : Colors.lightGreen,
+              ),
+            ),
+            FlatButton(
+              onPressed: switchFlatButtonColor,
+              child: Text("CHNAGE COLOR"),
+            )
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
-        child: Icon(Icons.add_alert_sharp),
+        child: Icon(Icons.ten_k),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
